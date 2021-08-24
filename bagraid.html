@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/dd765c1f9c.js" crossorigin="anonymous"></script>
+    <title>Bag Raid</title>
+
+    <style>
+        body {
+            /*display: flex; */
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            background: #e5e5e5;
+        }
+
+        input {
+            -webkit-appearance: none;
+            visibility: hidden;
+            display: none;
+        }
+
+        ol {
+            display: flex;
+            list-style: none;
+            width: 100%;
+            justify-content: center;
+            padding: 0;
+        }
+
+        li {
+            margin: 1%;
+        }
+
+        li label i {
+            padding: 15px;
+            font-size: 30px;
+            color: #1e8e02;
+            box-shadow: -3px -3px 6px rgba(255, 255, 255, 0.8),
+                2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        li label input:checked~i {
+            color: red;
+            transform: scale(0.97);
+            box-shadow: -3px -3px 8px rgba(255, 255, 255, 0.8),
+                3px 3px 8px rgba(0, 0, 0, 0.08),
+                inset -2px -2px 8px rgba(255, 255, 255, 0.8),
+                inset 2px 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .clubName {
+            font-weight: bold;
+            text-align: center;
+            margin-top: 2px;
+        }
+
+        .flex-grid {
+            display: flex;
+            width: 80%;
+            margin: auto;
+        }
+
+        .flex-grid .col {
+            flex: 1;
+        }
+        p.golfer1 {
+            font-size: 20px;
+            font-weight: bold;
+            align-items: center;
+            padding-top: 18px;
+            min-width: 100px;
+        }
+        #g1, #g2, #g3, #g4 {
+            visibility: visible;
+            display: flex;
+        }
+        div#addGolferContainer {
+            margin-top: 20px;
+        }
+        div#addGolferContainer input {
+            border: none;
+            background: #fdfdfd;
+            margin: -8px 10px;
+            height: 15px;
+            padding: 10px;
+            border: 1px #1e8e02 solid;
+        }
+        button.addGolfers {
+            margin-left: 10px;
+            height: 33px;
+            border: 1px #1e8e02 solid;
+            margin-right: -5px;
+        }
+        button.addGolfers:hover {
+            background: #e8f0fe;
+        }
+    </style>
+
+    <script>
+        // add golfers to list
+        function addGolfersFunction() {
+          var golfer1 = document.getElementById("g1");
+          var hiddenGolfer1 = document.getElementById("golferName1");
+          hiddenGolfer1.innerHTML = golfer1.value;
+
+          var golfer1 = document.getElementById("g2");
+          var hiddenGolfer1 = document.getElementById("golferName2");
+          hiddenGolfer1.innerHTML = golfer1.value;
+
+          var golfer1 = document.getElementById("g3");
+          var hiddenGolfer1 = document.getElementById("golferName3");
+          hiddenGolfer1.innerHTML = golfer1.value;
+
+          var golfer1 = document.getElementById("g4");
+          var hiddenGolfer1 = document.getElementById("golferName4");
+          hiddenGolfer1.innerHTML = golfer1.value;
+
+            findProfile();
+        }
+
+        
+    </script>
+</head>
+
+<body>
+    <div id="addGolferContainer">
+            <input type="text" placeholder="Golfer #1" id="g1" class="golferPlaceholder"><br>
+            <input type="text" placeholder="Golfer #2" id="g2" class="golferPlaceholder"><br>
+            <input type="text" placeholder="Golfer #3" id="g3" class="golferPlaceholder"><br>
+            <input type="text" placeholder="Golfer #4" id="g4" class="golferPlaceholder"><br>
+            <button class="addGolfers" onclick="addGolfersFunction()">Add Golfers</button>
+            <button class="addGolfers" onClick="window.location.reload();">Restart Game</button>
+        <br>
+    </div>
+
+    <!-- <ol>
+        <li>
+            <label>
+                <input type="checkbox">
+                <i class="fas fa-golf-ball"></i>
+                <p class="clubName">Driver</p>
+            </label>
+
+        </li>
+    </ol> -->
+    
+
+    <div class="flex-grid">
+        <div class="col">
+            <p id="golferName1" class="golfer1">Golfer #1</p>
+        </div>
+        <div id="g1D" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">D</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g13W" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">3W</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g14W" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">4W</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g15W" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">5W</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g13H" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">3H</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g14H" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">4H</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g15H" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">5H</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g13I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">3I</p>
+                    </label>
+
+                </li>
+            </ol>
+        </div>
+        <div id="g14I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">4I</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g15I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">5I</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g16I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">6I</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g17I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">7I</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g18I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">8I</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g19I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">9I</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g1PW" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">PW</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g1GW" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">GW</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g1SW" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">SW</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g1LW" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">LW</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="flex-grid">
+        <div class="col">
+            <p id="golferName2" class="golfer1">Golfer #2</p>
+        </div>
+        <div id="g2D" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">D</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g23W" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">3W</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g24W" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">4W</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g25W" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">5W</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g23H" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">3H</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g24H" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">4H</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g25H" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">5H</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g23I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">3I</p>
+                    </label>
+
+                </li>
+            </ol>
+        </div>
+        <div id="g24I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">4I</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g25I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">5I</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g26I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">6I</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g27I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">7I</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g28I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">8I</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g29I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">9I</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g2PW" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">PW</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g2GW" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">GW</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g2SW" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">SW</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g2LW" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">LW</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="flex-grid">
+        <div class="col">
+            <p id="golferName3" class="golfer1">Golfer #3</p>
+        </div>
+        <div id="g3D" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">D</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g33W" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">3W</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g34W" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">4W</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g35W" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">5W</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g33H" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">3H</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g34H" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">4H</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g35H" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">5H</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g33I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">3I</p>
+                    </label>
+
+                </li>
+            </ol>
+        </div>
+        <div id="g34I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">4I</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g35I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">5I</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g36I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">6I</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g37I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">7I</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g38I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">8I</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g39I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">9I</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g3PW" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">PW</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g3GW" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">GW</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g3SW" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">SW</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g3LW" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">LW</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="flex-grid">
+        <div class="col">
+            <p id="golferName4" class="golfer1">Golfer #4</p>
+        </div>
+        <div id="g4D" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">D</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g43W" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">3W</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g44W" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">4W</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g45W" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">5W</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g43H" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">3H</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g44H" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">4H</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g45H" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">5H</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g43I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">3I</p>
+                    </label>
+
+                </li>
+            </ol>
+        </div>
+        <div id="g44I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">4I</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g45I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">5I</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g46I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">6I</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g47I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">7I</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g48I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">8I</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g49I" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">9I</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g4PW" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">PW</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g4GW" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">GW</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g4SW" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">SW</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <div id="g4LW" class="col">
+            <ol>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <i class="fas fa-golf-ball"></i>
+                        <p class="clubName">LW</p>
+                    </label>
+                </li>
+            </ol>
+        </div>
+    </div>
+    
+</body>
+
+</html>

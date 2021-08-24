@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/dd765c1f9c.js" crossorigin="anonymous"></script>
+   
+    
+
+
+    <title>Wolf Golf Game</title>
+    
+    <style>
+.wolfContainer {
+    width: 440px;
+    background: gainsboro;
+    border: 2px solid deepskyblue;
+    padding: 20px;
+    margin: auto;
+}
+div#addGolferContainer {
+    background: lightblue;
+    width: 400px;
+    padding: 20px;
+}
+#addGolferContainer p {
+    margin-top: 0;
+}
+.enteredGolferList {
+    display: none;
+    background: lightblue;
+    padding: 20px;
+    width: 400px;
+}
+div#eg1, div#eg2, div#eg3, div#eg4 {
+    display: inline-block;
+    font-size: 18px;
+    font-weight: bold;
+    padding-right: 30px;
+    min-width: 65px;
+}
+.scoreButtons {
+    display: inline-block;
+    text-align: center;
+    width: 130px;
+}
+input#inc, input#inc2, input#inc3, input#inc4 {
+    width: 11%;
+    text-align: center;
+}
+button#startGameButton {
+    visibility: hidden;
+}
+ul {
+    display: inline-flex;
+}
+li {
+    flex: 0 0 125px;
+}
+i.fas.fa-golf-ball {
+    padding: 15px;
+    font-size: 24px;
+    box-shadow: -3px -3px 6px rgb(255 255 255 / 80%), 2px 2px 4px rgb(0 0 0 / 20%);
+}
+label input {
+    display: none;
+}
+li label input:checked~i {
+            color: crimson;
+            transform: scale(0.97);
+            box-shadow: -3px -3px 8px rgba(255, 255, 255, 0.8),
+                3px 3px 8px rgba(0, 0, 0, 0.08),
+                inset -2px -2px 8px rgba(255, 255, 255, 0.8),
+                inset 2px 2px 8px rgba(0, 0, 0, 0.1);
+}
+.teamate {
+    color: crimson;
+    font-weight: bold;
+    font-size: 18px;
+}
+#whoTeamate {
+    display: none;
+}
+#holeNumbText {
+    display: inline-block;
+    font-size: 34px;
+    font-weight: bold;
+    color: crimson;
+}
+#whoIsWolf {
+    display: inline-block;
+    font-size: 28px;
+    font-weight: bold;
+    color: crimson;
+}
+.holeTitle {
+    font-weight: bold;
+    font-size: 34px;
+}
+.bigHoleNum {
+    float: right;
+    padding-right: 24px;
+}
+.ww {
+    color: crimson;
+    font-weight: bold;
+}
+#wolfVs {
+    margin-top: 10px;
+}
+    </style>
+    
+    <script>
+        // add golfers to list
+        function addGolfersFunction() {
+          var golfer1 = document.getElementById("g1");
+          var hiddenGolfer1 = document.getElementById("eg1");
+          hiddenGolfer1.innerHTML = golfer1.value;
+
+          var golfer2 = document.getElementById("g2");
+          var hiddenGolfer2 = document.getElementById("eg2");
+          hiddenGolfer2.innerHTML = golfer2.value;
+
+          var golfer3 = document.getElementById("g3");
+          var hiddenGolfer3 = document.getElementById("eg3");
+          hiddenGolfer3.innerHTML = golfer3.value;
+
+          var golfer4 = document.getElementById("g4");
+          var hiddenGolfer4 = document.getElementById("eg4");
+          hiddenGolfer4.innerHTML = golfer4.value;
+
+          // add golfers names to teamate list
+          var teamName1 = document.getElementById("teamName1");
+          teamName1.innerHTML = golfer1.value;
+          var teamName2 = document.getElementById("teamName2");
+          teamName2.innerHTML = golfer2.value;
+          var teamName3 = document.getElementById("teamName3");
+          teamName3.innerHTML = golfer3.value;
+          var teamName4 = document.getElementById("teamName4");
+          teamName4.innerHTML = golfer4.value;
+
+          // hide golfer inputs once golfers are added, make list of golfers visible, make start game button visible
+          document.getElementById("addGolferContainer").remove();
+          document.getElementById("enteredGolferListId").style.display = "block";
+
+
+          //document.getElementById("startGameButton").style.visibility = "visible";
+        
+        }
+
+       
+    // score adjusting buttons
+    var i = 0;
+            var j = 0;
+            var k = 0;
+            var l = 0;
+            var m = 0;
+            function plusScore1() {
+                scr1 = parseInt(document.getElementById('inc').value);
+                sum = scr1 + 1;
+                document.getElementById('inc').value = sum;
+            }
+            function minusScore1() {
+                scr1 = parseInt(document.getElementById('inc').value);
+                sum = scr1 - 1;
+                document.getElementById('inc').value = sum;
+            }
+            function plusScore2() {
+                scr1 = parseInt(document.getElementById('inc2').value);
+                sum = scr1 + 1;
+                document.getElementById('inc2').value = sum;
+            }
+            function minusScore2() {
+                scr1 = parseInt(document.getElementById('inc2').value);
+                sum = scr1 - 1;
+                document.getElementById('inc2').value = sum;
+            }
+            function plusScore3() {
+                scr1 = parseInt(document.getElementById('inc3').value);
+                sum = scr1 + 1;
+                document.getElementById('inc3').value = sum;
+            }
+            function minusScore3() {
+                scr1 = parseInt(document.getElementById('inc3').value);
+                sum = scr1 - 1;
+                document.getElementById('inc3').value = sum;
+            }
+            function plusScore4() {
+                scr1 = parseInt(document.getElementById('inc4').value);
+                sum = scr1 + 1;
+                document.getElementById('inc4').value = sum;
+            }
+            function minusScore4() {
+                scr1 = parseInt(document.getElementById('inc4').value);
+                sum = scr1 - 1;
+                document.getElementById('inc4').value = sum;
+            }
+
+        // display which golfer is the wolf
+        function whoIsWolf() {
+            var wolf = document.getElementById("whoIsWolf");
+            var i = hn;
+
+            if(i == 1 || i == 5 || i == 9 || i == 13){
+                var firstWolf = document.getElementById("eg1");
+                wolf.innerHTML = firstWolf.innerHTML;
+            } else if (i == 2 || i == 6 || i == 10 || i == 14) {
+                var secondWolf = document.getElementById("eg2");
+                wolf.innerHTML = secondWolf.innerHTML;
+            } else if (i == 3 || i == 7 || i == 11 || i == 15) {
+                var thirdWolf = document.getElementById("eg3");
+                wolf.innerHTML = thirdWolf.innerHTML;
+            } else if (i == 4 || i == 8 || i == 12 || i == 16) {
+                var fourthWolf = document.getElementById("eg4");
+                wolf.innerHTML = fourthWolf.innerHTML;
+            }
+
+            // wolf for holes 17 and 18 are determined by lowest score
+            scr1 = parseInt(document.getElementById('inc').value);
+            scr2 = parseInt(document.getElementById('inc2').value);
+            scr3 = parseInt(document.getElementById('inc3').value);
+            scr4 = parseInt(document.getElementById('inc4').value);
+            var scoreSort = [scr1, scr2, scr3, scr4];
+            scoreSort.sort(function(a, b){return a-b});
+            //console.log(scoreSort);
+            //console.log(scoreSort[0]);
+            console.log(i);
+            if(i == 17 || i == 18) {
+                if(scoreSort[0] == scr1){
+                    var firstWolf = document.getElementById("eg1");
+                    wolf.innerHTML = firstWolf.innerHTML;
+                } 
+                if (scoreSort[0] == scr2) {
+                    var secondWolf = document.getElementById("eg2");
+                    wolf.innerHTML = secondWolf.innerHTML;
+                } 
+                if (scoreSort[0] == scr3) {
+                    var thirdWolf = document.getElementById("eg3");
+                    wolf.innerHTML = thirdWolf.innerHTML;
+                } 
+                if (scoreSort[0] == scr4) {
+                    var fourthWolf = document.getElementById("eg4");
+                    wolf.innerHTML = fourthWolf.innerHTML;
+                } 
+
+
+            }
+          // hide start game button once started
+         // document.getElementById("startGameButton").remove();
+
+        }
+
+        // what hole are you on
+        var hn = 1;
+        function holeNumber() { 
+            if(hn<=18){
+                hn++;
+                //document.getElementById('holeNumber').value = hn;
+                document.getElementById("holeNumbText").innerHTML = hn;
+
+            }
+            if(hn==19){
+                hn--;
+                document.getElementById("holeNumbText").innerHTML = hn;
+                document.getElementById("wonRightId").style.display = "none";
+            }
+            // rehide the wolf vs players message is showing
+            document.getElementById("wolfVs").style.display = "none";
+        }
+
+    // how is the wolf playing the hole
+        function playLone() {
+            var wolf = document.getElementById("whoIsWolf").innerHTML;
+            // it is the wolf vs golfer1, golfer2 and golfer3
+            var golfer1 = document.getElementById("eg1").innerHTML;
+            var golfer2 = document.getElementById("eg2").innerHTML;
+            var golfer3 = document.getElementById("eg3").innerHTML;
+            var golfer4 = document.getElementById("eg4").innerHTML;
+            var wolf = document.getElementById("whoIsWolf").innerHTML;
+            var teams = document.getElementById("wolfVs");
+
+            if(golfer1 == wolf){
+                teams.innerHTML = "It is " + '<span class="ww">' + wolf + '</span>' + " Vs " + golfer2 + ", " + golfer3 + " and " + golfer4;
+            } 
+            if(golfer2 == wolf){
+                teams.innerHTML = "It is " + '<span class="ww">' + wolf + '</span>' + " Vs " + golfer1 + ", " + golfer3 + " and " + golfer4;
+            } 
+            if(golfer3 == wolf){
+                teams.innerHTML = "It is " + '<span class="ww">' + wolf + '</span>' + " Vs " + golfer1 + ", " + golfer2 + " and " + golfer4;
+            } 
+            if(golfer4 == wolf){
+                teams.innerHTML = "It is " + '<span class="ww">' + wolf + '</span>' + " Vs " + golfer1 + ", " + golfer2 + " and " + golfer3;
+            } 
+            // hide teamates list
+            document.getElementById("whoTeamate").style.display = "none";
+            // hide the Wolf Team won buttons
+            document.getElementById("winGolfer1").style.display = "inline-flex";
+            document.getElementById("winGolfer2").style.display = "inline-flex";
+            document.getElementById("winGolfer3").style.display = "none";
+            document.getElementById("winGolfer4").style.display = "none";
+            document.getElementById("winGolfer5").style.display = "none";
+            document.getElementById("winGolfer6").style.display = "none";
+            document.getElementById("winGolfer7").style.display = "inline-flex";
+
+            // display wolf vs other names
+            document.getElementById("wolfVs").style.display = "block";
+        }
+        function playWolfTeam() {
+            document.getElementById("whoTeamate").style.display = "block";
+            document.getElementById("whoTeamate").style.visibility = "visible";
+            var golfer1 = document.getElementById("eg1").innerHTML;
+            var golfer2 = document.getElementById("eg2").innerHTML;
+            var golfer3 = document.getElementById("eg3").innerHTML;
+            var golfer4 = document.getElementById("eg4").innerHTML;
+            var wolf = document.getElementById("whoIsWolf").innerHTML;
+            console.log(wolf);
+
+            if(golfer1 == wolf){
+                //document.getElementById("teamate1-li").style.visibility = "hidden";
+                document.getElementById("teamate1-li").style.display = "none";
+            } else {
+                document.getElementById("teamate1-li").style.display = "block";
+            }
+            if(golfer2 == wolf){
+                document.getElementById("teamate2-li").style.display = "none";
+            } else {
+                document.getElementById("teamate2-li").style.display = "block";
+            }
+            if(golfer3 == wolf){
+                document.getElementById("teamate3-li").style.display = "none";
+            } else {
+                document.getElementById("teamate3-li").style.display = "block";
+            }
+            if(golfer4 == wolf){
+                document.getElementById("teamate4-li").style.display = "none";
+            } else {
+                document.getElementById("teamate4-li").style.display = "block";
+            }
+
+            document.getElementById("wolfVs").style.display = "none";
+
+            // hide the Lone Wolf won buttons
+            document.getElementById("winGolfer1").style.display = "none";
+            document.getElementById("winGolfer2").style.display = "none";
+            document.getElementById("winGolfer3").style.display = "inline-flex";
+            document.getElementById("winGolfer4").style.display = "inline-flex";
+            document.getElementById("winGolfer5").style.display = "none";
+            document.getElementById("winGolfer6").style.display = "none";
+            document.getElementById("winGolfer7").style.display = "inline-flex";
+        }
+        function playWolf() {
+            // display wolf vs other names
+            document.getElementById("wolfVs").style.display = "block";
+            // hide wolf teamates
+            document.getElementById("whoTeamate").style.display = "none";
+            // hide the Wolf Team won buttons
+            document.getElementById("winGolfer1").style.display = "none";
+            document.getElementById("winGolfer2").style.display = "none";
+            document.getElementById("winGolfer3").style.display = "none";
+            document.getElementById("winGolfer4").style.display = "none";
+            document.getElementById("winGolfer5").style.display = "inline-flex";
+            document.getElementById("winGolfer6").style.display = "inline-flex";
+
+            var wolf = document.getElementById("whoIsWolf").innerHTML;
+            // it is the wolf vs golfer1, golfer2 and golfer3
+            var golfer1 = document.getElementById("eg1").innerHTML;
+            var golfer2 = document.getElementById("eg2").innerHTML;
+            var golfer3 = document.getElementById("eg3").innerHTML;
+            var golfer4 = document.getElementById("eg4").innerHTML;
+            var wolf = document.getElementById("whoIsWolf").innerHTML;
+            var teams = document.getElementById("wolfVs");
+
+            if(golfer1 == wolf){
+                teams.innerHTML = "It is " + '<span class="ww">' + wolf + '</span>' + " Vs " + golfer2 + ", " + golfer3 + " and " + golfer4;
+            } 
+            if(golfer2 == wolf){
+                teams.innerHTML = "It is " + '<span class="ww">' + wolf + '</span>' + " Vs " + golfer1 + ", " + golfer3 + " and " + golfer4;
+            } 
+            if(golfer3 == wolf){
+                teams.innerHTML = "It is " + '<span class="ww">' + wolf + '</span>' + " Vs " + golfer1 + ", " + golfer2 + " and " + golfer4;
+            } 
+            if(golfer4 == wolf){
+                teams.innerHTML = "It is " + '<span class="ww">' + wolf + '</span>' + " Vs " + golfer1 + ", " + golfer2 + " and " + golfer3;
+            } 
+            
+            document.getElementById("winGolfer7").style.display = "inline-flex";
+
+        }
+
+        // who won
+        // lone wolf won
+        function winLone() {
+            var golfer1 = document.getElementById("eg1").innerHTML;
+            var golfer2 = document.getElementById("eg2").innerHTML;
+            var golfer3 = document.getElementById("eg3").innerHTML;
+            var golfer4 = document.getElementById("eg4").innerHTML;
+            var wolf = document.getElementById("whoIsWolf").innerHTML;
+
+            // score point for lone wolf golfer1
+            if(golfer1 == wolf){
+                scoreLone = document.getElementById('inc').value;
+                c = 3;
+                s = parseInt(scoreLone, 10);
+                newScore = c + s;
+                document.getElementById("inc").value = newScore;
+            } 
+            // score point for lone wolf golfer2
+            if(golfer2 == wolf){
+                scoreLone = document.getElementById('inc2').value;
+                c = 3;
+                s = parseInt(scoreLone, 10);
+                newScore = c + s;
+                document.getElementById("inc2").value = newScore;
+            } 
+            // score point for lone wolf golfer3
+            if(golfer3 == wolf){
+                scoreLone = document.getElementById('inc3').value;
+                c = 3;
+                s = parseInt(scoreLone, 10);
+                newScore = c + s;
+                document.getElementById("inc3").value = newScore;
+            } 
+            // score point for lone wolf golfer4
+            if(golfer4 == wolf){
+                scoreLone = document.getElementById('inc4').value;
+                c = 3;
+                s = parseInt(scoreLone, 10);
+                newScore = c + s;
+                document.getElementById("inc4").value = newScore;
+            }
+            // rehide the wolf vs players message
+            document.getElementById("wolfVs").style.display = "none";
+
+            // hide the who won buttons after a winner was selected
+            document.getElementById("winGolfer1").style.display = "none";
+            document.getElementById("winGolfer2").style.display = "none";
+            document.getElementById("winGolfer3").style.display = "none";
+            document.getElementById("winGolfer4").style.display = "none";
+            document.getElementById("winGolfer5").style.display = "none";
+            document.getElementById("winGolfer6").style.display = "none";
+            document.getElementById("winGolfer7").style.display = "none";
+        }
+        // opposing team won vs the Lone Wolf
+        function winLoneOp() {
+            var golfer1 = document.getElementById("eg1").innerHTML;
+            var golfer2 = document.getElementById("eg2").innerHTML;
+            var golfer3 = document.getElementById("eg3").innerHTML;
+            var golfer4 = document.getElementById("eg4").innerHTML;
+            var wolf = document.getElementById("whoIsWolf").innerHTML;
+
+            // score point for lone wolf opponents
+            if(golfer1 == wolf){
+                scoreOp2 = document.getElementById('inc2').value;
+                scoreOp3 = document.getElementById('inc3').value;
+                scoreOp4 = document.getElementById('inc4').value;
+                c = 1;
+                s2 = parseInt(scoreOp2, 10);
+                s3 = parseInt(scoreOp3, 10);
+                s4 = parseInt(scoreOp4, 10);
+                newScore2 = c + s2;
+                newScore3 = c + s3;
+                newScore4 = c + s4;
+                document.getElementById("inc2").value = newScore2;
+                document.getElementById("inc3").value = newScore3;
+                document.getElementById("inc4").value = newScore4;
+            } 
+            if(golfer2 == wolf){
+                scoreOp1 = document.getElementById('inc').value;
+                scoreOp3 = document.getElementById('inc3').value;
+                scoreOp4 = document.getElementById('inc4').value;
+                c = 1;
+                s1 = parseInt(scoreOp1, 10);
+                s3 = parseInt(scoreOp3, 10);
+                s4 = parseInt(scoreOp4, 10);
+                newScore1 = c + s1;
+                newScore3 = c + s3;
+                newScore4 = c + s4;
+                document.getElementById("inc").value = newScore1;
+                document.getElementById("inc3").value = newScore3;
+                document.getElementById("inc4").value = newScore4;
+            } 
+            if(golfer3 == wolf){
+                scoreOp2 = document.getElementById('inc2').value;
+                scoreOp1 = document.getElementById('inc').value;
+                scoreOp4 = document.getElementById('inc4').value;
+                c = 1;
+                s2 = parseInt(scoreOp2, 10);
+                s1 = parseInt(scoreOp1, 10);
+                s4 = parseInt(scoreOp4, 10);
+                newScore2 = c + s2;
+                newScore1 = c + s1;
+                newScore4 = c + s4;
+                document.getElementById("inc2").value = newScore2;
+                document.getElementById("inc").value = newScore1;
+                document.getElementById("inc4").value = newScore4;
+            } 
+            if(golfer4 == wolf){
+                scoreOp2 = document.getElementById('inc2').value;
+                scoreOp3 = document.getElementById('inc3').value;
+                scoreOp1 = document.getElementById('inc').value;
+                c = 1;
+                s2 = parseInt(scoreOp2, 10);
+                s3 = parseInt(scoreOp3, 10);
+                s1 = parseInt(scoreOp1, 10);
+                newScore2 = c + s2;
+                newScore3 = c + s3;
+                newScore1 = c + s1;
+                document.getElementById("inc2").value = newScore2;
+                document.getElementById("inc3").value = newScore3;
+                document.getElementById("inc").value = newScore1;
+            }
+            // rehide the wolf vs players message
+            document.getElementById("wolfVs").style.display = "none";
+
+            // hide the who won buttons after a winner was selected
+            document.getElementById("winGolfer1").style.display = "none";
+            document.getElementById("winGolfer2").style.display = "none";
+            document.getElementById("winGolfer3").style.display = "none";
+            document.getElementById("winGolfer4").style.display = "none";
+            document.getElementById("winGolfer5").style.display = "none";
+            document.getElementById("winGolfer6").style.display = "none";
+            document.getElementById("winGolfer7").style.display = "none";
+        }
+        function winWolfTeam() {
+            var golfer1 = document.getElementById("eg1").innerHTML;
+            var golfer2 = document.getElementById("eg2").innerHTML;
+            var golfer3 = document.getElementById("eg3").innerHTML;
+            var golfer4 = document.getElementById("eg4").innerHTML;
+            var wolf = document.getElementById("whoIsWolf").innerHTML;
+
+            if(golfer1 == wolf){
+                // teams are golfer1 as the wolf and golfer2
+                if(teamate2.checked == true){
+                    scoreOp1 = document.getElementById('inc').value;
+                    scoreOp2 = document.getElementById('inc2').value;
+                    c = 2;
+                    s1 = parseInt(scoreOp1, 10);
+                    s2 = parseInt(scoreOp2, 10);
+                    newScore1 = c + s1;
+                    newScore2 = c + s2;
+                    document.getElementById("inc").value = newScore1;
+                    document.getElementById("inc2").value = newScore2;
+                }
+                if(teamate3.checked == true){
+                    scoreOp1 = document.getElementById('inc').value;
+                    scoreOp3 = document.getElementById('inc3').value;
+                    c = 2;
+                    s1 = parseInt(scoreOp1, 10);
+                    s3 = parseInt(scoreOp3, 10);
+                    newScore1 = c + s1;
+                    newScore3 = c + s3;
+                    document.getElementById("inc").value = newScore1;
+                    document.getElementById("inc3").value = newScore3;
+                }
+                if(teamate4.checked == true){
+                    scoreOp1 = document.getElementById('inc').value;
+                    scoreOp4 = document.getElementById('inc4').value;
+                    c = 2;
+                    s1 = parseInt(scoreOp1, 10);
+                    s4 = parseInt(scoreOp4, 10);
+                    newScore1 = c + s1;
+                    newScore4 = c + s4;
+                    document.getElementById("inc").value = newScore1;
+                    document.getElementById("inc4").value = newScore4;
+                }
+
+                 // hide the who won buttons after a winner was selected
+                document.getElementById("winGolfer1").style.display = "none";
+                document.getElementById("winGolfer2").style.display = "none";
+                document.getElementById("winGolfer3").style.display = "none";
+                document.getElementById("winGolfer4").style.display = "none";
+                document.getElementById("winGolfer5").style.display = "none";
+                document.getElementById("winGolfer6").style.display = "none";
+                document.getElementById("winGolfer7").style.display = "none";
+            } 
+            if(golfer2 == wolf){
+                if(teamate1.checked == true){
+                    scoreOp1 = document.getElementById('inc').value;
+                    scoreOp2 = document.getElementById('inc2').value;
+                    c = 2;
+                    s1 = parseInt(scoreOp1, 10);
+                    s2 = parseInt(scoreOp2, 10);
+                    newScore1 = c + s1;
+                    newScore2 = c + s2;
+                    document.getElementById("inc").value = newScore1;
+                    document.getElementById("inc2").value = newScore2;
+                }
+                if(teamate3.checked == true){
+                    scoreOp1 = document.getElementById('inc2').value;
+                    scoreOp3 = document.getElementById('inc3').value;
+                    c = 2;
+                    s1 = parseInt(scoreOp1, 10);
+                    s3 = parseInt(scoreOp3, 10);
+                    newScore1 = c + s1;
+                    newScore3 = c + s3;
+                    document.getElementById("inc2").value = newScore1;
+                    document.getElementById("inc3").value = newScore3;
+                }
+                if(teamate4.checked == true){
+                    scoreOp1 = document.getElementById('inc2').value;
+                    scoreOp4 = document.getElementById('inc4').value;
+                    c = 2;
+                    s1 = parseInt(scoreOp1, 10);
+                    s4 = parseInt(scoreOp4, 10);
+                    newScore1 = c + s1;
+                    newScore4 = c + s4;
+                    document.getElementById("inc2").value = newScore1;
+                    document.getElementById("inc4").value = newScore4;
+                }
+            } 
+            if(golfer3 == wolf){
+                if(teamate1.checked == true){
+                    scoreOp1 = document.getElementById('inc').value;
+                    scoreOp2 = document.getElementById('inc3').value;
+                    c = 2;
+                    s1 = parseInt(scoreOp1, 10);
+                    s2 = parseInt(scoreOp2, 10);
+                    newScore1 = c + s1;
+                    newScore2 = c + s2;
+                    document.getElementById("inc").value = newScore1;
+                    document.getElementById("inc3").value = newScore2;
+                }
+                if(teamate2.checked == true){
+                    scoreOp1 = document.getElementById('inc2').value;
+                    scoreOp3 = document.getElementById('inc3').value;
+                    c = 2;
+                    s1 = parseInt(scoreOp1, 10);
+                    s3 = parseInt(scoreOp3, 10);
+                    newScore1 = c + s1;
+                    newScore3 = c + s3;
+                    document.getElementById("inc2").value = newScore1;
+                    document.getElementById("inc3").value = newScore3;
+                }
+                if(teamate4.checked == true){
+                    scoreOp1 = document.getElementById('inc3').value;
+                    scoreOp4 = document.getElementById('inc4').value;
+                    c = 2;
+                    s1 = parseInt(scoreOp1, 10);
+                    s4 = parseInt(scoreOp4, 10);
+                    newScore1 = c + s1;
+                    newScore4 = c + s4;
+                    document.getElementById("inc3").value = newScore1;
+                    document.getElementById("inc4").value = newScore4;
+                }
+            } 
+            if(golfer4 == wolf){
+                if(teamate2.checked == true){
+                    scoreOp1 = document.getElementById('inc4').value;
+                    scoreOp2 = document.getElementById('inc2').value;
+                    c = 2;
+                    s1 = parseInt(scoreOp1, 10);
+                    s2 = parseInt(scoreOp2, 10);
+                    newScore1 = c + s1;
+                    newScore2 = c + s2;
+                    document.getElementById("inc4").value = newScore1;
+                    document.getElementById("inc2").value = newScore2;
+                }
+                if(teamate3.checked == true){
+                    scoreOp1 = document.getElementById('inc4').value;
+                    scoreOp3 = document.getElementById('inc3').value;
+                    c = 2;
+                    s1 = parseInt(scoreOp1, 10);
+                    s3 = parseInt(scoreOp3, 10);
+                    newScore1 = c + s1;
+                    newScore3 = c + s3;
+                    document.getElementById("inc4").value = newScore1;
+                    document.getElementById("inc3").value = newScore3;
+                }
+                if(teamate1.checked == true){
+                    scoreOp1 = document.getElementById('inc').value;
+                    scoreOp4 = document.getElementById('inc4').value;
+                    c = 2;
+                    s1 = parseInt(scoreOp1, 10);
+                    s4 = parseInt(scoreOp4, 10);
+                    newScore1 = c + s1;
+                    newScore4 = c + s4;
+                    document.getElementById("inc").value = newScore1;
+                    document.getElementById("inc4").value = newScore4;
+                }
+            } 
+            UnSelectAll();
+        }
+        function winOpTeam() {
+            var golfer1 = document.getElementById("eg1").innerHTML;
+            var golfer2 = document.getElementById("eg2").innerHTML;
+            var golfer3 = document.getElementById("eg3").innerHTML;
+            var golfer4 = document.getElementById("eg4").innerHTML;
+            var wolf = document.getElementById("whoIsWolf").innerHTML;
+
+            if(golfer1 == wolf){
+                // teams 3 and 4 would win as opposing team
+                if(teamate2.checked == true){
+                    scoreOp1 = document.getElementById('inc3').value;
+                    scoreOp2 = document.getElementById('inc4').value;
+                    c = 2;
+                    s1 = parseInt(scoreOp1, 10);
+                    s2 = parseInt(scoreOp2, 10);
+                    newScore1 = c + s1;
+                    newScore2 = c + s2;
+                    document.getElementById("inc3").value = newScore1;
+                    document.getElementById("inc4").value = newScore2;
+                }
+                if(teamate3.checked == true){
+                    scoreOp1 = document.getElementById('inc2').value;
+                    scoreOp3 = document.getElementById('inc4').value;
+                    c = 2;
+                    s1 = parseInt(scoreOp1, 10);
+                    s3 = parseInt(scoreOp3, 10);
+                    newScore1 = c + s1;
+                    newScore3 = c + s3;
+                    document.getElementById("inc2").value = newScore1;
+                    document.getElementById("inc4").value = newScore3;
+                }
+                if(teamate4.checked == true){
+                    scoreOp1 = document.getElementById('inc2').value;
+                    scoreOp4 = document.getElementById('inc3').value;
+                    c = 2;
+                    s1 = parseInt(scoreOp1, 10);
+                    s4 = parseInt(scoreOp4, 10);
+                    newScore1 = c + s1;
+                    newScore4 = c + s4;
+                    document.getElementById("inc2").value = newScore1;
+                    document.getElementById("inc3").value = newScore4;
+                }
+            } 
+            if(golfer2 == wolf){
+                if(teamate1.checked == true){
+                    scoreOp1 = document.getElementById('inc3').value;
+                    scoreOp2 = document.getElementById('inc4').value;
+                    c = 2;
+                    s1 = parseInt(scoreOp1, 10);
+                    s2 = parseInt(scoreOp2, 10);
+                    newScore1 = c + s1;
+                    newScore2 = c + s2;
+                    document.getElementById("inc3").value = newScore1;
+                    document.getElementById("inc4").value = newScore2;
+                }
+                if(teamate3.checked == true){
+                    scoreOp1 = document.getElementById('inc').value;
+                    scoreOp3 = document.getElementById('inc4').value;
+                    c = 2;
+                    s1 = parseInt(scoreOp1, 10);
+                    s3 = parseInt(scoreOp3, 10);
+                    newScore1 = c + s1;
+                    newScore3 = c + s3;
+                    document.getElementById("inc").value = newScore1;
+                    document.getElementById("inc4").value = newScore3;
+                }
+                if(teamate4.checked == true){
+                    scoreOp1 = document.getElementById('inc').value;
+                    scoreOp4 = document.getElementById('inc3').value;
+                    c = 2;
+                    s1 = parseInt(scoreOp1, 10);
+                    s4 = parseInt(scoreOp4, 10);
+                    newScore1 = c + s1;
+                    newScore4 = c + s4;
+                    document.getElementById("inc").value = newScore1;
+                    document.getElementById("inc3").value = newScore4;
+                }
+            } 
+            if(golfer3 == wolf){
+                if(teamate1.checked == true){
+                    scoreOp1 = document.getElementById('inc2').value;
+                    scoreOp2 = document.getElementById('inc4').value;
+                    c = 2;
+                    s1 = parseInt(scoreOp1, 10);
+                    s2 = parseInt(scoreOp2, 10);
+                    newScore1 = c + s1;
+                    newScore2 = c + s2;
+                    document.getElementById("inc2").value = newScore1;
+                    document.getElementById("inc4").value = newScore2;
+                }
+                if(teamate2.checked == true){
+                    scoreOp1 = document.getElementById('inc').value;
+                    scoreOp3 = document.getElementById('inc4').value;
+                    c = 2;
+                    s1 = parseInt(scoreOp1, 10);
+                    s3 = parseInt(scoreOp3, 10);
+                    newScore1 = c + s1;
+                    newScore3 = c + s3;
+                    document.getElementById("inc").value = newScore1;
+                    document.getElementById("inc4").value = newScore3;
+                }
+                if(teamate4.checked == true){
+                    scoreOp1 = document.getElementById('inc').value;
+                    scoreOp4 = document.getElementById('inc2').value;
+                    c = 2;
+                    s1 = parseInt(scoreOp1, 10);
+                    s4 = parseInt(scoreOp4, 10);
+                    newScore1 = c + s1;
+                    newScore4 = c + s4;
+                    document.getElementById("inc").value = newScore1;
+                    document.getElementById("inc2").value = newScore4;
+                }
+            } 
+            if(golfer4 == wolf){
+                if(teamate2.checked == true){
+                    scoreOp1 = document.getElementById('inc').value;
+                    scoreOp2 = document.getElementById('inc3').value;
+                    c = 2;
+                    s1 = parseInt(scoreOp1, 10);
+                    s2 = parseInt(scoreOp2, 10);
+                    newScore1 = c + s1;
+                    newScore2 = c + s2;
+                    document.getElementById("inc").value = newScore1;
+                    document.getElementById("inc3").value = newScore2;
+                }
+                if(teamate3.checked == true){
+                    scoreOp1 = document.getElementById('inc').value;
+                    scoreOp3 = document.getElementById('inc2').value;
+                    c = 2;
+                    s1 = parseInt(scoreOp1, 10);
+                    s3 = parseInt(scoreOp3, 10);
+                    newScore1 = c + s1;
+                    newScore3 = c + s3;
+                    document.getElementById("inc").value = newScore1;
+                    document.getElementById("inc2").value = newScore3;
+                }
+                if(teamate1.checked == true){
+                    scoreOp1 = document.getElementById('inc2').value;
+                    scoreOp4 = document.getElementById('inc3').value;
+                    c = 2;
+                    s1 = parseInt(scoreOp1, 10);
+                    s4 = parseInt(scoreOp4, 10);
+                    newScore1 = c + s1;
+                    newScore4 = c + s4;
+                    document.getElementById("inc2").value = newScore1;
+                    document.getElementById("inc3").value = newScore4;
+                }
+            } 
+            UnSelectAll();
+            // hide the who won buttons after a winner was selected
+            document.getElementById("winGolfer1").style.display = "none";
+            document.getElementById("winGolfer2").style.display = "none";
+            document.getElementById("winGolfer3").style.display = "none";
+            document.getElementById("winGolfer4").style.display = "none";
+            document.getElementById("winGolfer5").style.display = "none";
+            document.getElementById("winGolfer6").style.display = "none";
+            document.getElementById("winGolfer7").style.display = "none";
+        }
+        function winWolf() {
+            var golfer1 = document.getElementById("eg1").innerHTML;
+            var golfer2 = document.getElementById("eg2").innerHTML;
+            var golfer3 = document.getElementById("eg3").innerHTML;
+            var golfer4 = document.getElementById("eg4").innerHTML;
+            var wolf = document.getElementById("whoIsWolf").innerHTML;
+
+            // score point for lone wolf golfer1
+            if(golfer1 == wolf){
+                scoreLone = document.getElementById('inc').value;
+                c = 2
+                s = parseInt(scoreLone, 10);
+                newScore = c + s;
+                document.getElementById("inc").value = newScore;
+            } 
+            // score point for lone wolf golfer2
+            if(golfer2 == wolf){
+                scoreLone = document.getElementById('inc2').value;
+                c = 2
+                s = parseInt(scoreLone, 10);
+                newScore = c + s;
+                document.getElementById("inc2").value = newScore;
+            } 
+            // score point for lone wolf golfer3
+            if(golfer3 == wolf){
+                scoreLone = document.getElementById('inc3').value;
+                c = 2
+                s = parseInt(scoreLone, 10);
+                newScore = c + s;
+                document.getElementById("inc3").value = newScore;
+            } 
+            // score point for lone wolf golfer4
+            if(golfer4 == wolf){
+                scoreLone = document.getElementById('inc4').value;
+                c = 2
+                s = parseInt(scoreLone, 10);
+                newScore = c + s;
+                document.getElementById("inc4").value = newScore;
+            }
+            // rehide the wolf vs players message
+            document.getElementById("wolfVs").style.display = "none";
+
+            // hide the who won buttons after a winner was selected
+            document.getElementById("winGolfer1").style.display = "none";
+            document.getElementById("winGolfer2").style.display = "none";
+            document.getElementById("winGolfer3").style.display = "none";
+            document.getElementById("winGolfer4").style.display = "none";
+            document.getElementById("winGolfer5").style.display = "none";
+            document.getElementById("winGolfer6").style.display = "none";
+            document.getElementById("winGolfer7").style.display = "none";
+        }
+        function winWolfOp() {
+           winLoneOp();
+            // rehide the wolf vs players message
+            document.getElementById("wolfVs").style.display = "none";
+
+            // hide the who won buttons after a winner was selected
+            document.getElementById("winGolfer1").style.display = "none";
+            document.getElementById("winGolfer2").style.display = "none";
+            document.getElementById("winGolfer3").style.display = "none";
+            document.getElementById("winGolfer4").style.display = "none";
+            document.getElementById("winGolfer5").style.display = "none";
+            document.getElementById("winGolfer6").style.display = "none";
+            document.getElementById("winGolfer7").style.display = "none";
+        }
+
+        // unselect teamate once hole has ended and score has been given
+        function UnSelectAll() {
+        var items = document.getElementsByName('teamatesCheckbox');
+        for (var i = 0; i < items.length; i++) {
+            if (items[i].type == 'checkbox')
+                items[i].checked = false;
+        }
+    }
+
+        function hideTeams(){
+            document.getElementById("whoTeamate").style.display = "none";
+
+            // hide the who won buttons after a winner was selected
+            document.getElementById("winGolfer1").style.display = "none";
+            document.getElementById("winGolfer2").style.display = "none";
+            document.getElementById("winGolfer3").style.display = "none";
+            document.getElementById("winGolfer4").style.display = "none";
+            document.getElementById("winGolfer5").style.display = "none";
+            document.getElementById("winGolfer6").style.display = "none";
+            document.getElementById("winGolfer7").style.display = "none";
+        }
+
+    </script>
+</head>
+<body>
+   <!-- <input type="button" name="Un_CheckAll" value="Uncheck All"
+onClick="UnSelectAll();">-->
+<div class="wolfContainer">
+    <h1>Wolf Golf Game</h1>
+    <i class="fas fa-dog"></i>
+
+    <div id="addGolferContainer">
+        <p>Please add 4 golfers to play the game of Wolf.</p>
+            <input type="text" placeholder="Golfer #1" id="g1" class="golferPlaceholder"><br>
+            <input type="text" placeholder="Golfer #2" id="g2" class="golferPlaceholder"><br>
+            <input type="text" placeholder="Golfer #3" id="g3" class="golferPlaceholder"><br>
+            <input type="text" placeholder="Golfer #4" id="g4" class="golferPlaceholder"><br>
+            <button class="addGolfers" onclick="addGolfersFunction(); whoIsWolf();">Add Golfers</button>
+        <br>
+    </div>
+   <div id="enteredGolferListId" class="enteredGolferList">
+    <div class="bigHoleNum">
+        <span class="holeTitle">Hole #</span>
+        <div id="holeNumbText">1</div>
+    </div>
+    
+        <div id="eg1" class="enteredGolfer"></div> 
+        <div class="scoreButtons">
+            <button onclick="minusScore1();">-</button>
+            <input type="text" id="inc" value="0"></input>
+            <button onclick="plusScore1();">+</button>
+        </div> 
+        <br>
+        
+        <div id="eg2" class="enteredGolfer"></div> 
+        <div class="scoreButtons">
+            <button onclick="minusScore2();">-</button>
+            <input type="text" id="inc2" value="0"></input>
+            <button onclick="plusScore2();">+</button>
+        </div> 
+        <br>
+        
+        <div id="eg3" class="enteredGolfer"></div>
+        <div class="scoreButtons">
+            <button onclick="minusScore3();">-</button>
+            <input type="text" id="inc3" value="0"></input>
+            <button onclick="plusScore3();">+</button>
+        </div>
+        <br>
+        
+        <div id="eg4" class="enteredGolfer"></div> 
+        <div class="scoreButtons">
+            <button onclick="minusScore4();">-</button>
+            <input type="text" id="inc4" value="0"></input>
+            <button onclick="plusScore4();">+</button>
+        </div>
+        <br>
+    </div>
+
+    <span class="wolfIs">The <strong>Wolf</strong> is </span>
+    <div id="whoIsWolf"></div><br>
+    
+    
+    <!--<input type="text" id="holeNumber" value="1"></input>
+    <span class="holeTitle">Hole #</span>
+    <div id="holeNumbText">1</div>
+    <button onclick="holeNumber(); whoIsWolf(); uncheckAll();">Next Hole</button>-->
+   
+    <div id="teamSelection" class="col">
+        <p>How is the Wolf playing this hole?</p>
+        <div class="howPlay">
+            <button id="howPlay1" class="myBtn" onclick="playLone();">Lone Wolf</button>
+            <button id="howPlay2" class="myBtn" onclick="playWolfTeam();">With Teamate</button>
+            <button id="howPlay3" class="myBtn" onclick="playWolf();">Wolf</button>
+        </div>
+        <div id="wolfVs"></div>
+    </div>
+    <div id="whoTeamate">
+        <p>Who is the Wolf's teamate?</p>
+        <ul>
+            <li id="teamate1-li">
+                <label>
+                    <input id="teamate1" type="checkbox" name="teamatesCheckbox">
+                    <i class="fas fa-golf-ball"></i>
+                    <p id="teamName1" class="teamate">Golfer 1</p>
+                </label>
+            </li>
+            <li id="teamate2-li">
+                <label>
+                    <input id="teamate2" type="checkbox" name="teamatesCheckbox">
+                    <i class="fas fa-golf-ball"></i>
+                    <p id="teamName2" class="teamate">Golfer 2</p>
+                </label>
+            </li>
+            <li id="teamate3-li">
+                <label>
+                    <input id="teamate3" type="checkbox" name="teamatesCheckbox">
+                    <i class="fas fa-golf-ball"></i>
+                    <p id="teamName3" class="teamate">Golfer 3</p>
+                </label>
+            </li>
+            <li id="teamate4-li">
+                <label>
+                    <input id="teamate4" type="checkbox" name="teamatesCheckbox">
+                    <i class="fas fa-golf-ball"></i>
+                    <p id="teamName4" class="teamate">Golfer 4</p>
+                </label>
+            </li>
+        </ul>
+    </div>
+    <div class="whoWon">
+        <div class="wonLeft">
+            <p class="whoWon">Who won</p>
+        </div>
+        <div id="wonRightId" class="wonRight">
+            <button id="winGolfer1" class="myBtn" onclick="winLone(); holeNumber(); UnSelectAll(); whoIsWolf(); hideTeams();">Lone Wolf</button>
+            <button id="winGolfer2" class="myBtn" onclick="winLoneOp(); holeNumber();  UnSelectAll(); whoIsWolf(); hideTeams();">Lone Opponents</button>
+            <button id="winGolfer3" class="myBtn" onclick="winWolfTeam(); holeNumber();  UnSelectAll(); whoIsWolf(); hideTeams();">Wolf Team</button>
+            <button id="winGolfer4" class="myBtn" onclick="winOpTeam(); holeNumber();  UnSelectAll(); whoIsWolf(); hideTeams();">Opponents Team</button>
+            <button id="winGolfer5" class="myBtn" onclick="winWolf(); holeNumber();  UnSelectAll(); whoIsWolf(); hideTeams();">Wolf</button>
+            <button id="winGolfer6" class="myBtn" onclick="winWolfOp(); holeNumber();  UnSelectAll(); whoIsWolf(); hideTeams();">Wolf Opponents</button>
+            <button id="winGolfer7" class="myBtn" onclick="holeNumber();  UnSelectAll(); whoIsWolf(); hideTeams();">Tie</button>
+        </div>
+    </div>
+    <br><br><br><br>
+    <button onClick="window.location.reload();">Restart Game</button>
+
+
+</div>
+</body>
+</html>

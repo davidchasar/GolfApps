@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/dd765c1f9c.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
+    <title>Hammer Golf</title>
+    <style>
+        body {
+            font-family: 'Yusei Magic', sans-serif;
+        }
+        i.fas.fa-hammer {
+    color: #00593e;
+    margin: 0 20px;
+}
+p.betTitle, p.whoWon {
+    display: inline;
+    font-size: 20px;
+    font-weight: bold;
+}
+input#bet {
+    width: 35px;
+    text-align: center;
+}
+input#inc, input#inc2, input#inc3, input#inc4 {
+    width: 35px;
+    text-align: center;
+}
+.container {
+    margin: auto;
+    display: block;
+    width: 500px;
+    background: #f5f4dd;
+    padding: 5px 0;
+    border: #5f0403 10px solid;
+}
+button.addGolfers {
+    margin: 10px 1px;
+    height: 33px;
+    border: 1px #00593e solid;
+}
+button.addGolfers:hover {
+    background: #e8f0fe;
+}
+input#g1, input#g2, input#g3, input#g4 {
+    height: 29px;
+    margin-bottom: 3px;
+    border: 1px solid #00593e;
+    width: 184px;
+}
+p.score {
+    display: inline;
+    font-weight: bold;
+}
+div#golferName1, div#golferName2, div#golferName3, div#golferName4 {
+    font-size: 20px;
+    font-weight: bold;
+    display: inline-block;
+    min-width: 102px;
+}
+.scoreButtons {
+    display: inline;
+}
+#winGolfer1, #winGolfer2, #winGolfer3, #winGolfer4 {
+    display:none;
+}
+.topContainer {
+    display: flex;
+    padding: 0 20px;
+}
+#addGolferContainer {
+    margin-top:9px;
+    flex: 0 0 210px;
+}
+#rules {
+    flex: 1;
+}
+h2.rulesTitle {
+    margin: 9px 0 0 0;
+    background: #00593e;
+    color: white;
+    padding: 0px 5px;
+    text-align: center;
+}
+.gameTitle {
+    text-align: center;
+    color: #00593e;
+}
+.rulesP {
+    font-size: 13px;
+    border: 1px solid #00593e;
+    padding: 5px;
+    margin: 0;
+}
+.myBtn {
+    height: 33px;
+    border: 1px #00593e solid;
+    min-width: 33px;
+    margin: 3px 0;
+}
+.numDisplay {
+    height: 27px;
+}
+#betDiv, .hammerDiv, .wonDiv, .scoreboardDiv {
+    display: flex;
+    margin: 13px 0;
+}
+.betLeft, .hammerLeft, .wonLeft, .scoreboardLeft {
+    flex: 0 0 205px;
+    flex-shrink: inherit;
+    background: #00593e;
+    color: white;
+    height: 33px;
+    margin-top: 3px;
+    padding-left: 5px;
+    margin-right: 20px;
+}
+.betRight, .hammerRight, .wonRight, .scoreboardRight {
+    flex: 1;
+}
+.smallHammer {
+    color: white !important;
+    padding-top: 9px;
+    margin: 0 !important;
+}
+input:-internal-autofill-selected {
+    appearance: menulist-button;
+    background-color: rgb(244, 254, 232) !important;
+    background-image: none !important;
+    color: -internal-light-dark(black, white) !important;
+}
+.bettingContainer {
+    margin: 20px 0;
+    background: #dacca3;
+    padding: 10px 0;
+}
+    </style>
+
+    <script>
+
+        // add golfers to list with score
+        function addGolfersFunction() {
+          var golfer1 = document.getElementById("g1");
+          var hiddenGolfer1 = document.getElementById("golferName1");
+          hiddenGolfer1.innerHTML = golfer1.value;
+
+          var golfer2 = document.getElementById("g2");
+          var hiddenGolfer2 = document.getElementById("golferName2");
+          hiddenGolfer2.innerHTML = golfer2.value;
+
+          var golfer3 = document.getElementById("g3");
+          var hiddenGolfer3 = document.getElementById("golferName3");
+          hiddenGolfer3.innerHTML = golfer3.value;
+
+          var golfer4 = document.getElementById("g4");
+          var hiddenGolfer4 = document.getElementById("golferName4");
+          hiddenGolfer4.innerHTML = golfer4.value;
+
+          // hide who won buttons if no one is playing as that golfer #
+          var xl1 = golfer1.value;
+          var xl2 = golfer2.value;
+          var xl3 = golfer3.value;
+          var xl4 = golfer4.value;
+            if(xl1 == '') {
+                // remove golfer 1 from score area if not being used
+                document.getElementById("enteredGolferListId1").style.display = "none";
+            } else {
+                document.getElementById("winGolfer1").style.display = "inline";
+                // add golfer 1 from score area if added to game in progress
+                 document.getElementById("enteredGolferListId1").style.display = "flex";
+            }
+            if(xl2 == '') {
+                // remove golfer 2 from score area if not being used
+                document.getElementById("enteredGolferListId2").style.display = "none";
+            } else {
+                document.getElementById("winGolfer2").style.display = "inline";
+                // add golfer 2 from score area if added to game in progress
+                document.getElementById("enteredGolferListId2").style.display = "flex";
+            }
+            if(xl3 == '') {
+                // remove golfer 3 from score area if not being used
+                document.getElementById("enteredGolferListId3").style.display = "none";
+            } else {
+                document.getElementById("winGolfer3").style.display = "inline";
+                // add golfer 3 from score area if added to game in progress
+                document.getElementById("enteredGolferListId3").style.display = "flex";
+            }
+            if(xl4 == '') {
+                // remove golfer 4 from score area if not being used
+                document.getElementById("enteredGolferListId4").style.display = "none";
+            } else {
+                document.getElementById("winGolfer4").style.display = "inline";
+                // add golfer 4 from score area if added to game in progress
+                document.getElementById("enteredGolferListId4").style.display = "flex";
+            }
+
+
+          replaceName();
+         
+        }
+
+        // score adjusting buttons
+        var i = 0;
+        var j = 0;
+        var k = 0;
+        var l = 0;
+        var m = 0;
+        function plusScore1() {
+            scr1 = parseInt(document.getElementById('inc').value);
+            sum = scr1 + 1;
+            document.getElementById('inc').value = sum;
+        }
+        function minusScore1() {
+            scr1 = parseInt(document.getElementById('inc').value);
+            sum = scr1 - 1;
+            document.getElementById('inc').value = sum;
+        }
+        function plusScore2() {
+            scr1 = parseInt(document.getElementById('inc2').value);
+            sum = scr1 + 1;
+            document.getElementById('inc2').value = sum;
+        }
+        function minusScore2() {
+            scr1 = parseInt(document.getElementById('inc2').value);
+            sum = scr1 - 1;
+            document.getElementById('inc2').value = sum;
+        }
+        function plusScore3() {
+            scr1 = parseInt(document.getElementById('inc3').value);
+            sum = scr1 + 1;
+            document.getElementById('inc3').value = sum;
+        }
+        function minusScore3() {
+            scr1 = parseInt(document.getElementById('inc3').value);
+            sum = scr1 - 1;
+            document.getElementById('inc3').value = sum;
+        }
+        function plusScore4() {
+            scr1 = parseInt(document.getElementById('inc4').value);
+            sum = scr1 + 1;
+            document.getElementById('inc4').value = sum;
+        }
+        function minusScore4() {
+            scr1 = parseInt(document.getElementById('inc4').value);
+            sum = scr1 - 1;
+            document.getElementById('inc4').value = sum;
+        }
+        // hammer plus minus buttons
+        function plusScore5() {
+            scr1 = parseInt(document.getElementById('bet').value);
+            sum = scr1 + 1;
+            document.getElementById('bet').value = sum;
+        }
+        function minusScore5() {
+            scr1 = parseInt(document.getElementById('bet').value);
+            sum = scr1 - 1;
+            document.getElementById('bet').value = sum;
+        }
+        
+        // doubles bet when hammered
+        function hammerBet() {
+            var bet = document.getElementById("bet").value;
+            console.log(bet);
+            hammerMult = bet * 2;
+            console.log(hammerMult);
+
+            document.getElementById("bet").value = hammerMult;
+        }
+
+        // triples bet for par 3's
+        function hammerBet3() {
+            var bet = document.getElementById("bet").value;
+            hammerMult = bet * 3;
+            document.getElementById("bet").value = hammerMult;
+        }
+
+        function winGolfer1() {
+            // add bet to golfer 1 score
+            currentBet = document.getElementById("bet").value;
+            console.log(currentBet);
+            scoreGolfer1 = document.getElementById('inc').value;
+            console.log(scoreGolfer1);
+            c = parseInt(currentBet, 10);
+            s = parseInt(scoreGolfer1, 10);
+            newScore = c + s;
+            console.log(newScore);
+            document.getElementById("inc").value = newScore;
+            resetBet();
+        }
+
+        function winGolfer2() {
+            // add bet to golfer 2 score
+            currentBet = document.getElementById("bet").value;
+            console.log(currentBet);
+            scoreGolfer2 = document.getElementById('inc2').value;
+            console.log(scoreGolfer2);
+            c = parseInt(currentBet, 10);
+            s = parseInt(scoreGolfer2, 10);
+            newScore = c + s;
+            console.log(newScore);
+            document.getElementById("inc2").value = newScore;
+            resetBet();
+        }
+
+        function winGolfer3() {
+            // add bet to golfer 3 score
+            currentBet = document.getElementById("bet").value;
+            console.log(currentBet);
+            scoreGolfer3 = document.getElementById('inc3').value;
+            console.log(scoreGolfer3);
+            c = parseInt(currentBet, 10);
+            s = parseInt(scoreGolfer3, 10);
+            newScore = c + s;
+            console.log(newScore);
+            document.getElementById("inc3").value = newScore;
+            resetBet();
+        }
+
+        function winGolfer4() {
+            // add bet to golfer 4 score
+            currentBet = document.getElementById("bet").value;
+            console.log(currentBet);
+            scoreGolfer4 = document.getElementById('inc4').value;
+            console.log(scoreGolfer4);
+            c = parseInt(currentBet, 10);
+            s = parseInt(scoreGolfer4, 10);
+            newScore = c + s;
+            console.log(newScore);
+            document.getElementById("inc4").value = newScore;
+            resetBet();
+        }
+
+        function resetBet() {
+            document.getElementById("bet").value = 0;
+        }
+
+        // replace who won button with name entered
+        function replaceName() {
+          var golfer1 = document.getElementById("g1");
+          var hiddenGolfer1 = document.getElementById("winGolfer1");
+          hiddenGolfer1.innerHTML = golfer1.value;
+
+          var golfer2 = document.getElementById("g2");
+          var hiddenGolfer2 = document.getElementById("winGolfer2");
+          hiddenGolfer2.innerHTML = golfer2.value;
+
+          var golfer3 = document.getElementById("g3");
+          var hiddenGolfer3 = document.getElementById("winGolfer3");
+          hiddenGolfer3.innerHTML = golfer3.value;
+
+          var golfer4 = document.getElementById("g4");
+          var hiddenGolfer4 = document.getElementById("winGolfer4");
+          hiddenGolfer4.innerHTML = golfer4.value;
+        
+        }
+
+
+
+    </script>
+</head>
+<body>
+    <div class="container">
+    <h1 class="gameTitle">Hammer Golf<i class="fas fa-hammer"></i></h1>
+    <div class="topContainer">
+    <div id="addGolferContainer">
+        <input type="text" placeholder="Golfer #1" id="g1" class="golferPlaceholder"><br>
+        <input type="text" placeholder="Golfer #2" id="g2" class="golferPlaceholder"><br>
+        <input type="text" placeholder="Golfer #3" id="g3" class="golferPlaceholder"><br>
+        <input type="text" placeholder="Golfer #4" id="g4" class="golferPlaceholder"><br>
+        <button class="addGolfers" onclick="addGolfersFunction()">Add Golfers</button>
+        <button class="addGolfers" onClick="window.location.reload();">Restart Game</button>
+</div>
+<div id="rules"><h2 class="rulesTitle">Rules</h2>
+    <p class="rulesP">The first golfer to tee off sets a bet amount for the hole.
+    After the second golfer hits they can than hammer the bet back to their opponent, this will double the current bet.
+    Each golfer can take turns hammering the bet back and forth until one player finishes the hole.
+    If the players tie they can choose to carry over the bet to the next hole or wipe the bet and start new on the next hole.
+    Par 3's hammer can only be called while the tee shot is in the air, this will triple the bet for the hole.
+    </p>
+</div>
+</div>
+<div class="bettingContainer">
+<div id="betDiv">
+    <div class="betLeft">
+        <p class="betTitle">Bet</p>
+    </div>
+    <div class="betRight">
+        <button class="myBtn" onclick="minusScore5();">-</button>
+        <input id="bet" class="numDisplay" value="0"></input>
+        <button class="myBtn" onclick="plusScore5();">+</button>
+        <button class="myBtn" onclick="resetBet();">Reset Bet</button>
+    </div>
+</div>
+<div class="hammerDiv">
+    <div class="hammerLeft">
+        <p class="betTitle">Hammer</p>
+        <i class="fas fa-hammer smallHammer"></i>
+    </div>
+    <div class="hammerRight">
+        <button id="hammerBetBut" class="myBtn" onclick="hammerBet();">Hammer</button>
+        <button id="hammerBetBut" class="myBtn" onclick="hammerBet3();">Hammer Par 3</button>
+    </div>
+</div>
+<div class="wonDiv">
+    <div class="wonLeft">
+        <p class="whoWon">Who won</p>
+    </div>
+    <div class="wonRight">
+        <button id="winGolfer1" class="myBtn" onclick="winGolfer1();">Golfer 1</button>
+        <button id="winGolfer2" class="myBtn" onclick="winGolfer2();">Golfer 2</button>
+        <button id="winGolfer3" class="myBtn" onclick="winGolfer3();">Golfer 3</button>
+        <button id="winGolfer4" class="myBtn" onclick="winGolfer4();">Golfer 4</button>
+    </div>
+</div>
+</div>
+
+<!--
+<div id="enteredGolferListId4" class="enteredGolferList">
+    <div id="golferName4" class="enteredGolfer">Golfer 4</div> 
+    <div class="scoreButtons"><p class="score">Score</p>
+        <button class="myBtn" onclick="minusScore4();">-</button>
+        <input id="inc4" class="numDisplay" value="0"></input>
+        <button class="myBtn" onclick="plusScore4();">+</button>
+    </div> 
+    <br>
+</div>
+-->
+
+<div id="enteredGolferListId1" class="scoreboardDiv">
+    <div class="scoreboardLeft">
+        <div id="" class="enteredGolferList">
+            <div id="golferName1" class="enteredGolfer">Golfer 1</div> 
+        </div>
+    </div>
+    <div class="scoreboardRight">
+        <div class="scoreButtons"><p class="score">Score</p>
+            <button class="myBtn" onclick="minusScore1();">-</button>
+            <input id="inc" class="numDisplay"  value="0"></input>
+            <button class="myBtn" onclick="plusScore1();">+</button>
+        </div> 
+    </div>
+</div>
+<div id="enteredGolferListId2" class="scoreboardDiv">
+    <div class="scoreboardLeft">
+        <div id="" class="enteredGolferList">
+            <div id="golferName2" class="enteredGolfer">Golfer 2</div> 
+        </div>
+    </div>
+    <div class="scoreboardRight">
+        <div class="scoreButtons"><p class="score">Score</p>
+            <button class="myBtn" onclick="minusScore2();">-</button>
+            <input id="inc2" class="numDisplay"  value="0"></input>
+            <button class="myBtn" onclick="plusScore2();">+</button>
+        </div> 
+    </div>
+</div>
+<div id="enteredGolferListId3" class="scoreboardDiv">
+    <div class="scoreboardLeft">
+        <div id="" class="enteredGolferList">
+            <div id="golferName3" class="enteredGolfer">Golfer 3</div> 
+        </div>
+    </div>
+    <div class="scoreboardRight">
+        <div class="scoreButtons"><p class="score">Score</p>
+            <button class="myBtn" onclick="minusScore3();">-</button>
+            <input id="inc3" class="numDisplay"  value="0"></input>
+            <button class="myBtn" onclick="plusScore3();">+</button>
+        </div> 
+    </div>
+</div>
+<div id="enteredGolferListId4" class="scoreboardDiv">
+    <div class="scoreboardLeft">
+        <div id="" class="enteredGolferList">
+            <div id="golferName4" class="enteredGolfer">Golfer 4</div> 
+        </div>
+    </div>
+    <div class="scoreboardRight">
+        <div class="scoreButtons"><p class="score">Score</p>
+            <button class="myBtn" onclick="minusScore4();">-</button>
+            <input id="inc4" class="numDisplay"  value="0"></input>
+            <button class="myBtn" onclick="plusScore4();">+</button>
+        </div> 
+    </div>
+</div>
+</body>
+</html>
